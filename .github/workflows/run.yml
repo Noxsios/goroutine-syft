@@ -1,0 +1,23 @@
+name: Run main.go
+
+permissions:
+  contents: read
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  build-and-run:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          ref: main
+      - name: Reset
+        run: ./reset.sh
+      - name: Build
+        run: go build -o goroutine-syft .
+      - name: Run
+        run: ./goroutine-syft
+        shell: bash
